@@ -61,7 +61,7 @@ async function installApk(adb, apk) {
 async function downloadApk() {
     updateStatus("Downloading APK from binaries.rebble.io...");
     try {
-        let response = await fetch("https://cors-anywhere.herokuapp.com/https://binaries.rebble.io/apks/pebble-4.4.3.apk", {
+        let response = await fetch("https://binaries.rebble.io/apks/pebble-4.4.3.apk", {
             method: "GET",
             headers: {
                 "Content-Type": "application/vnd.android.package-archive",
