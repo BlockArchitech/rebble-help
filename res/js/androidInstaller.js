@@ -150,3 +150,4 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.forEach(button => button.disabled = true);
     document.getElementById("android_installer").hidden = false;
 });
+
