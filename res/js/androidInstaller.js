@@ -92,11 +92,17 @@ async function install() {
 function nextStep() {
     const currentStep = document.querySelector('.active');
     currentStep.classList.add('completed');
-    const nextStep = currentStep.nextElementSibling.nextElementSibling;
+    currentStep.classList.remove('active');
+    let nextStep = currentStep.nextElementSibling;
+    if (!nextStep) {
+        nextStep = document.querySelector('.step:not(.completed)');
+    }
     if (nextStep) {
         nextStep.classList.remove('upcoming', 'inactive');
         currentStep.classList.add('inactive');
         nextStep.classList.add('active');
+        const buttons = nextStep.querySelectorAll('button');
+        buttons.forEach(button => button.disabled = false);
         nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
@@ -119,3 +125,9 @@ document.getElementById("connect").onclick = async () => {
 document.getElementById("install").onclick = async () => {
     await install();
 };
+
+// on load, make all buttons that are not in .step.active disabled
+document.addEventListener("DOMContentLoaded", () => {
+    const inactiveButtons = document.querySelectorAll('.step:not(.active) button');
+    inactiveButtons.forEach(button => button.disabled = true);
+});

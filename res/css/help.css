@@ -306,6 +306,7 @@ alert {
   align-items: center;
   margin: 20px 0;
   transition: opacity 0.3s;
+  position: relative;
 }
 
 .step-circle {
@@ -333,14 +334,21 @@ alert {
   flex: 1;
 }
 
-.line {
+.line-container {
   position: absolute;
   left: 54px;
-  top: 35px;
-  bottom: 0;
+  top: 15px; /* Adjust this value to align the line correctly */
+  bottom: 15px; /* Adjust this value to align the line correctly */
+  width: 2px;
+  z-index: -1;
+}
+
+.line {
+  position: absolute;
   width: 2px;
   background: #ddd;
-  z-index: -1;
+  top: 0;
+  bottom: 0;
 }
 
 .step.upcoming .step-circle {
@@ -356,7 +364,6 @@ alert {
 .step.inactive {
   opacity: 0.3;
 }
-
 
 button:disabled {
   cursor: not-allowed;
