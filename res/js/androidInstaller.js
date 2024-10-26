@@ -116,6 +116,15 @@ function handleError(message, error) {
     updateStatus(`${message}: ${error.message}`);
 }
 
+function createAlert(message) {
+    const alert = document.createElement("alert");
+    alert.innerHTML = message;
+    const installer = document.getElementById("android_installer");
+    installer.innerHTML = "";
+    installer.appendChild(alert);
+    installer.hidden = false;
+}
+
 document.getElementById("connect").onclick = async () => {
     webusb = await init();
     adb = await connectDevice(webusb);
@@ -126,8 +135,18 @@ document.getElementById("install").onclick = async () => {
     await install();
 };
 
-// on load, make all buttons that are not in .step.active disabled
 document.addEventListener("DOMContentLoaded", () => {
-    const inactiveButtons = document.querySelectorAll('.step:not(.active) button');
-    inactiveButtons.forEach(button => button.disabled = true);
+    if (!navigator.userAgent.includes("Chrome")) {
+        createAlert("This tool is only supported on Google Chrome, or Chromium-based browsers. Please switch to Chrome to use this tool, or follow the <a href='https://help.rebble.io/apk-load-android/#3'>manual installation instructions</a>.");
+        return;
+    }
+
+    if (!("serial" in navigator)) {
+        createAlert("This tool requires the WebUSB & Web Serial APIs, which is not supported by your browser. Please switch to Chrome to use this tool, or follow the <a href='https://help.rebble.io/apk-load-android/#3'>manual installation instructions</a>.");
+        return;
+    }
+
+    const buttons = document.querySelectorAll('button:not(.step.active button)');
+    buttons.forEach(button => button.disabled = true);
+    document.getElementById("android_installer").hidden = false;
 });
